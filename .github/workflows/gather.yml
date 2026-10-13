@@ -59,10 +59,10 @@ jobs:
           gh label create top5 --color 1f3a8a --description "Weekly Top 5 cards" --force
           gh label create approved --color 2da44e --description "Post these cards to Facebook" --force
           gh label create posted --color 6e7781 --description "Posted to Facebook" --force
-          existing=$(gh issue list --label top5 --state open --json number,title \
+          existing=$(gh issue list --state open --limit 100 --json number,title \
             --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n1)
           if [ -n "$existing" ]; then
-            gh issue edit "$existing" --body-file "$DIR/issue.md"
+            gh issue edit "$existing" --body-file "$DIR/issue.md" --add-label top5
             gh issue comment "$existing" --body "Cards and caption refreshed from PlayHQ."
           else
             gh issue create --title "$TITLE" --label top5 --body-file "$DIR/issue.md" --assignee "$GITHUB_REPOSITORY_OWNER"

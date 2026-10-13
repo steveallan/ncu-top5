@@ -1,6 +1,7 @@
 name: Post Top 5 to Facebook
 
-# Adding the "approved" label to a Top 5 issue posts its cards, with the caption as it stands in
+# Adding the "approved" label to a Top 5 issue (known by its top5:dir marker, so it doesn't matter
+# if the "top5" label was taken off along the way) posts its cards, with the caption as it stands in
 # the issue, to the NCU Page. "Check Facebook token" (run by hand) tests the secrets, posting
 # nothing.
 on:
@@ -28,7 +29,7 @@ jobs:
     if: >-
       github.event_name == 'issues' &&
       github.event.label.name == 'approved' &&
-      contains(github.event.issue.labels.*.name, 'top5') &&
+      contains(github.event.issue.body, '<!-- top5:dir=') &&
       !contains(github.event.issue.labels.*.name, 'posted')
     runs-on: ubuntu-latest
     concurrency:
