@@ -1,0 +1,14 @@
+{
+  "name": "ncu-top5",
+  "private": true,
+  "type": "module",
+  "description": "Weekly NCU Top 5 cards from PlayHQ, posted to Facebook after approval",
+  "scripts": {
+    "gather": "node scripts/gather.mjs",
+    "post": "node scripts/post.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "playwright": "1.61.1"
+  }
+}

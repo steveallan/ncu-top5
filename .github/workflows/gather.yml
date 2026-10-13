@@ -1,0 +1,69 @@
+name: Gather Top 5
+
+# 2pm Sydney on Tuesdays, October to March. 03:00 UTC is 2pm under daylight saving (AEDT), which
+# covers the whole window. GitHub can start scheduled runs a few minutes late.
+on:
+  schedule:
+    - cron: "0 3 * 1-3,10-12 2"
+  workflow_dispatch:
+    inputs:
+      today:
+        description: "Make the cards for the week up to this date (YYYY-MM-DD). Leave blank for today."
+        required: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: gather
+  cancel-in-progress: false
+
+jobs:
+  gather:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - id: gather
+        run: node scripts/gather.mjs
+        env:
+          TOP5_TODAY: ${{ inputs.today }}
+
+      - name: Commit the cards
+        if: steps.gather.outputs.dir != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rounds
+          git diff --cached --quiet || git commit -m "${{ steps.gather.outputs.title }}"
+          git push
+
+      - name: Open (or refresh) the approval issue
+        if: steps.gather.outputs.dir != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.gather.outputs.title }}
+          DIR: ${{ steps.gather.outputs.dir }}
+        run: |
+          gh label create top5 --color 1f3a8a --description "Weekly Top 5 cards" --force
+          gh label create approved --color 2da44e --description "Post these cards to Facebook" --force
+          gh label create posted --color 6e7781 --description "Posted to Facebook" --force
+          existing=$(gh issue list --label top5 --state open --json number,title \
+            --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n1)
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file "$DIR/issue.md"
+            gh issue comment "$existing" --body "Cards and caption refreshed from PlayHQ."
+          else
+            gh issue create --title "$TITLE" --label top5 --body-file "$DIR/issue.md" --assignee "$GITHUB_REPOSITORY_OWNER"
+          fi

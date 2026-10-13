@@ -1,0 +1,68 @@
+name: Post Top 5 to Facebook
+
+# Adding the "approved" label to a Top 5 issue posts its cards, with the caption as it stands in
+# the issue, to the NCU Page. "Check Facebook token" (run by hand) tests the secrets, posting
+# nothing.
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-token:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/post.mjs
+        env:
+          CHECK_TOKEN: "1"
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+
+  post:
+    if: >-
+      github.event_name == 'issues' &&
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'top5') &&
+      !contains(github.event.issue.labels.*.name, 'posted')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: post-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: post
+        shell: bash
+        run: |
+          node scripts/post.mjs | tee post.log
+          echo "link=$(tail -n1 post.log)" >> "$GITHUB_OUTPUT"
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+
+      - name: Record the post and close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          LINK: ${{ steps.post.outputs.link }}
+        run: |
+          gh issue edit "$N" --add-label posted
+          gh issue comment "$N" --body "Posted to Facebook: $LINK"
+          gh issue close "$N"
+
+      - name: Say what went wrong
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue edit "$N" --remove-label approved
+          gh issue comment "$N" --body "Posting failed, so nothing went up. The details are in $RUN. Once it's fixed, add the **approved** label again."
