@@ -81,3 +81,9 @@ For the first real post, open it in a private browser window while logged out. T
 The Page token stays valid until you change your Facebook password, stop being a Page admin, or
 remove the app. If any of those happens, posting fails and the issue says so. Redo steps 5–8 and update
 `FB_PAGE_TOKEN`.
+
+## Leaving someone off the cards
+
+If a player asks not to be included (the privacy policy, `PRIVACY.md`, promises this), add their name to
+`excluded.json` exactly as PlayHQ shows it, e.g. `{ "names": ["Jane Citizen"] }`. From then on they show as
+"Private player". To take them out of a post that's already up, edit or delete that post on Facebook.

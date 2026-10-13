@@ -3,6 +3,12 @@
 
 const PRIVATE = "********";
 
+/** People who have asked to be left off the cards (excluded.json); shown as "Private player". */
+let excluded = new Set();
+export function setExcluded(names) {
+  excluded = new Set(names.map((n) => n.trim().toLowerCase()));
+}
+
 /** "Old Ignatians (Trundlers) A1" → "Old Ignatians (Trundlers)". */
 export function clubName(teamName) {
   return teamName.replace(/\s+(\d(st|nd|rd|th)|[A-Z]\d)$/, "");
@@ -41,7 +47,7 @@ function inningsOf(cards) {
         const byId = new Map((team.players ?? []).map((p) => [p.participantId, p]));
         return (id, short) => {
           const name = short === PRIVATE ? PRIVATE : (byId.get(id)?.name ?? short);
-          return name === PRIVATE || !name ? "Private player" : name;
+          return name === PRIVATE || !name || excluded.has(name.toLowerCase()) ? "Private player" : name;
         };
       };
       const keepers = new Set(

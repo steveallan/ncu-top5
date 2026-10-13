@@ -6,11 +6,11 @@
 //
 // Writes rounds/<season>/<round>/ (the PNGs, caption.txt, issue.md) and prints that folder.
 
-import { appendFile, mkdir, writeFile } from "node:fs/promises";
+import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { currentSeason, gradeMatches, grades, scorecard } from "../src/playhq.mjs";
-import { batting, bowling, clubName, fielding, gradeLabel, partnerships } from "../src/top5.mjs";
+import { batting, bowling, clubName, fielding, gradeLabel, partnerships, setExcluded } from "../src/top5.mjs";
 import { cardHtml, renderPngs } from "../src/cards.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -78,6 +78,7 @@ function caption(round, lists) {
 async function main() {
   const today = process.env.TOP5_TODAY || sydneyToday();
   const from = addDays(today, -(WINDOW_DAYS - 1));
+  setExcluded(JSON.parse(await readFile(path.join(ROOT, "excluded.json"), "utf8")).names ?? []);
   const season = await currentSeason();
   console.log(`Season ${season.name}; matches last played ${from} to ${today}`);
 
