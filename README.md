@@ -1,6 +1,6 @@
 # NCU Top 5
 
-Every Tuesday at 2pm (Sydney), October to March, this repo:
+Every Tuesday at 12pm (Sydney), October to March, this repo:
 
 1. reads the past week's NCU scorecards from PlayHQ,
 2. makes four Facebook cards (Top 5 batting, bowling, partnerships, fielding) and a draft caption,
