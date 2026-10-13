@@ -26,7 +26,7 @@ Figures from PlayHQ scorecards. Spotted something we missed? Let us know in the 
 <!-- caption:end -->
 
 ### Cards
-<img src="NCU%20R1%20Top%205%20Batting.png" width="540" alt="NCU R1 Top 5 Batting.png">
-<img src="NCU%20R1%20Top%205%20Bowling.png" width="540" alt="NCU R1 Top 5 Bowling.png">
-<img src="NCU%20R1%20Top%205%20Partnerships.png" width="540" alt="NCU R1 Top 5 Partnerships.png">
-<img src="NCU%20R1%20Top%205%20Fielding.png" width="540" alt="NCU R1 Top 5 Fielding.png">
+<img src="https://github.com/steveallan/ncu-top5/blob/main/rounds/summer-2026-27/round-1/NCU%20R1%20Top%205%20Batting.png?raw=true" width="540" alt="NCU R1 Top 5 Batting.png">
+<img src="https://github.com/steveallan/ncu-top5/blob/main/rounds/summer-2026-27/round-1/NCU%20R1%20Top%205%20Bowling.png?raw=true" width="540" alt="NCU R1 Top 5 Bowling.png">
+<img src="https://github.com/steveallan/ncu-top5/blob/main/rounds/summer-2026-27/round-1/NCU%20R1%20Top%205%20Partnerships.png?raw=true" width="540" alt="NCU R1 Top 5 Partnerships.png">
+<img src="https://github.com/steveallan/ncu-top5/blob/main/rounds/summer-2026-27/round-1/NCU%20R1%20Top%205%20Fielding.png?raw=true" width="540" alt="NCU R1 Top 5 Fielding.png">
