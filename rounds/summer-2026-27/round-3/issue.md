@@ -1,9 +1,11 @@
 <!-- top5:dir=rounds/summer-2026-27/round-3 -->
-**Round 3 Top 5** — Saturday 24 October 2026. 10 scorecards read.
+**Round 3 Top 5** — Saturday 24 – Sunday 25 October 2026. 21 scorecards read; 11 two-day innings still going at stumps wait for next week.
 
 To post: check the cards and the caption, edit the caption below if you want to (keep the two marker lines), then add the **approved** label. The cards go up as one album on the NCU Page and the link is added here.
 
 ### Check before posting
+- Artarmon Maestros (1st Grade v West Ryde Rovers) — partnership pairs may be wrong: 27ac15fa-9fb3-4e46-acac-10e06fd8f6e8
+- North Ryde RSL (4th Grade v Northbridge) — partnership pairs may be wrong: 985d676b-914f-4c77-a35f-2e759dfaeddc
 - Cammeray (C1 v Chatswood Premier) — partnership pairs may be wrong: 9cdee5d9-1d38-4371-bae0-3a085fe272a3
 
 ### Caption
@@ -11,9 +13,9 @@ To post: check the cards and the caption, edit the caption below if you want to 
 🏏 Round 3 Top 5s are in!
 
 🔥 Top score: Cameron Fraser 183 (Pymble Pigs A1)
-🎯 Best bowling: Salman Shaukat 4/21 (North Sydney Leagues A1)
+🎯 Best bowling: Shantanu Havele 5/37 (West Ryde Rovers 1st Grade)
 🤝 Biggest stand: Cameron Fraser & Taha Khan, 305 for the 1st wicket (Pymble Pigs A1)
-🧤 Safe hands: 4 fielders took 3 catches each
+🧤 Safe hands: Dhrumil Shah with 4 dismissals
 
 Swipe through for the full Top 5 batting, bowling, partnerships and fielding 👉
 
